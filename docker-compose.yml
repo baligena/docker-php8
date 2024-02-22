@@ -12,12 +12,13 @@ services:
     tty: true
     depends_on:
       - mysql
-      - postgres
-      - redis
+      # - postgres
+      # - redis
     networks:
       - docker.network
     volumes:
       - .:/var/www
+      - composer_vendor:/var/www/public_html/vendor
 
   nginx:
     build: ./docker/nginx
@@ -100,47 +101,52 @@ services:
       PMA_ARBITRARY: 1
       PMA_PORT: 3306
 
-  postgres:
-    image: postgres:15-alpine
-    container_name: docker.postgres
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "5432:5432"
-    networks:
-      - docker.network
-    volumes:
-      - "./docker/postgres/dbdata:/var/lib/postgresql/data"
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-development}
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: docker.postgres
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - docker.network
+  #   volumes:
+  #     - "./docker/postgres/dbdata:/var/lib/postgresql/data"
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER:-postgres}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+  #     POSTGRES_DB: ${POSTGRES_DB:-development}
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: docker.pgadmin
-    tty: true
-    depends_on:
-      - postgres
-    ports:
-      - "8081:80"
-    networks:
-      - docker.network
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@localhost.com}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: docker.pgadmin
+  #   tty: true
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - "8081:80"
+  #   networks:
+  #     - docker.network
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@localhost.com}
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
 
-  redis:
-    image: bitnami/redis:latest
-    restart: unless-stopped
-    container_name: docker.redis
-    tty: true
-    ports:
-      - "6379:6379"
-    networks:
-      - docker.network
-    volumes:
-      - ./docker/redis:/bitnami/redis/data
-    environment:
-      ALLOW_EMPTY_PASSWORD: ${REDIS_ALLOW_EMPTY_PASSWORD:-no}
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
+  # redis:
+  #   image: bitnami/redis:latest
+  #   restart: unless-stopped
+  #   container_name: docker.redis
+  #   tty: true
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - docker.network
+  #   volumes:
+  #     - ./docker/redis:/bitnami/redis/data
+  #   environment:
+  #     ALLOW_EMPTY_PASSWORD: ${REDIS_ALLOW_EMPTY_PASSWORD:-no}
+  #     REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
+
+
+
+volumes:
+  composer_vendor:
