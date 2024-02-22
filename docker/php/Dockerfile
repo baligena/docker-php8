@@ -1,5 +1,6 @@
 # From
-FROM php:8.2.12-fpm-alpine3.18
+FROM php:7.4.33-fpm-alpine3.16 
+#FROM php:8.2.12-fpm-alpine3.18
 
 # Labels
 LABEL creatorName="Vagner dos Santos Cardoso"
@@ -50,10 +51,10 @@ RUN set -eux \
   imap \
   gmp \
   \
-  # Install xdebug
-  && pecl install -o -f xdebug \
-  && docker-php-ext-enable xdebug \
-  \
+  # # Install xdebug
+  # && pecl install -o -f xdebug \
+  # && docker-php-ext-enable xdebug \
+  # \
   # Install redis
   && pecl install -o -f redis \
   && docker-php-ext-enable redis \

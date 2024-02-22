@@ -146,7 +146,5 @@ services:
   #     ALLOW_EMPTY_PASSWORD: ${REDIS_ALLOW_EMPTY_PASSWORD:-no}
   #     REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
 
-
-
 volumes:
   composer_vendor:
