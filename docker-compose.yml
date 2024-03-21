@@ -35,6 +35,18 @@ services:
     volumes:
       - .:/var/www
 
+  # Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: docker.imgServer
+    restart: unless-stopped
+    tty: true
+    ports:
+        - "8182:80"
+    volumes:
+        - /mnt/c/Users/lobster/Desktop/html:/usr/share/nginx/html
+
+
   # apache:
   #   build: ./docker/apache
   #   restart: unless-stopped
